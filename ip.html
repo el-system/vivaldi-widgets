@@ -4,23 +4,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark light">
+  <meta name="color-scheme" content="light dark">
   <title>My IP</title>
   <style>
     :root {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color-scheme: dark;
+      color-scheme: light dark;
+      --text: #20242c;
+      --muted: #535d6c;
+      --rule: rgba(20, 30, 40, .17);
+      --button-bg: rgba(20, 30, 40, .09);
+      --button-hover: rgba(20, 30, 40, .16);
+      --pill-bg: rgba(65, 85, 120, .12);
+      --pill-text: #344e71;
+      --nl-bg: rgba(16, 120, 78, .13);
+      --nl-text: #086844;
+      --de-bg: rgba(175, 110, 16, .14);
+      --de-text: #905608;
+      --error: #b52e33;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #f2f3f7;
+        --muted: #adb6c5;
+        --rule: rgba(255, 255, 255, .18);
+        --button-bg: rgba(255, 255, 255, .12);
+        --button-hover: rgba(255, 255, 255, .21);
+        --pill-bg: rgba(145, 165, 210, .17);
+        --pill-text: #c2d8fc;
+        --nl-bg: rgba(22, 130, 91, .29);
+        --nl-text: #9ce6c4;
+        --de-bg: rgba(160, 105, 25, .29);
+        --de-text: #f5d09c;
+        --error: #ffa9a9;
+      }
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
-      background: #17191e;
-      color: #f2f3f7;
+      background: transparent !important;
+    }
+
+    body {
       padding: 18px;
+      color: var(--text);
     }
 
     .widget {
@@ -50,18 +83,18 @@
       font-weight: 600;
       border-radius: 99px;
       padding: 6px 10px;
-      background: #293243;
-      color: #bfdbfe;
+      background: var(--pill-bg);
+      color: var(--pill-text);
     }
 
     .country.nl {
-      background: #193d32;
-      color: #9ce6c4;
+      background: var(--nl-bg);
+      color: var(--nl-text);
     }
 
     .country.de {
-      background: #45341f;
-      color: #f5d09c;
+      background: var(--de-bg);
+      color: var(--de-text);
     }
 
     .country.changed {
@@ -78,7 +111,7 @@
     }
 
     .meta {
-      color: #afb5c3;
+      color: var(--muted);
       font-size: 12px;
       min-height: 20px;
     }
@@ -92,27 +125,28 @@
     hr {
       border: 0;
       height: 1px;
-      background: #353943;
+      background: var(--rule);
       margin: 24px 0 18px;
     }
 
     .previous {
       font-size: 12px;
-      color: #b3bac9;
+      color: var(--muted);
     }
 
     .previous strong {
       display: block;
-      color: #e7e9ef;
+      color: var(--text);
       font-size: 13px;
       font-weight: 600;
       padding-top: 5px;
+      overflow-wrap: anywhere;
     }
 
     button {
       cursor: pointer;
-      background: #313640;
-      color: white;
+      background: var(--button-bg);
+      color: var(--text);
       border: 0;
       border-radius: 9px;
       padding: 10px 13px;
@@ -122,7 +156,7 @@
     }
 
     button:hover {
-      background: #434a56;
+      background: var(--button-hover);
     }
 
     button:disabled {
@@ -132,13 +166,13 @@
 
     #status {
       font-size: 11px;
-      color: #9da5b4;
+      color: var(--muted);
       margin-top: 14px;
       min-height: 16px;
     }
 
     #status.error {
-      color: #ffa9a9;
+      color: var(--error);
     }
   </style>
 </head>
