@@ -10,32 +10,28 @@
     :root {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color-scheme: light dark;
-      --text: #20242c;
-      --muted: #535d6c;
-      --rule: rgba(20, 30, 40, .17);
-      --button-bg: rgba(20, 30, 40, .09);
-      --button-hover: rgba(20, 30, 40, .16);
-      --pill-bg: rgba(65, 85, 120, .12);
-      --pill-text: #344e71;
-      --nl-bg: rgba(16, 120, 78, .13);
+      --fallback-bg: #fafafa;
+      --fallback-fg: #20242c;
+      --bg: var(--colorBg, var(--fallback-bg));
+      --fg: var(--colorFg, var(--fallback-fg));
+      --muted: color-mix(in srgb, var(--fg) 68%, var(--bg));
+      --rule: color-mix(in srgb, var(--fg) 16%, transparent);
+      --button-bg: color-mix(in srgb, var(--fg) 9%, var(--bg));
+      --button-hover: color-mix(in srgb, var(--fg) 16%, var(--bg));
+      --nl-bg: rgba(22, 140, 91, .15);
       --nl-text: #086844;
-      --de-bg: rgba(175, 110, 16, .14);
-      --de-text: #905608;
+      --de-bg: rgba(190, 120, 21, .16);
+      --de-text: #885300;
       --error: #b52e33;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --text: #f2f3f7;
-        --muted: #adb6c5;
-        --rule: rgba(255, 255, 255, .18);
-        --button-bg: rgba(255, 255, 255, .12);
-        --button-hover: rgba(255, 255, 255, .21);
-        --pill-bg: rgba(145, 165, 210, .17);
-        --pill-text: #c2d8fc;
-        --nl-bg: rgba(22, 130, 91, .29);
+        --fallback-bg: #17191e;
+        --fallback-fg: #f2f3f7;
+        --nl-bg: rgba(22, 140, 91, .27);
         --nl-text: #9ce6c4;
-        --de-bg: rgba(160, 105, 25, .29);
+        --de-bg: rgba(190, 120, 21, .27);
         --de-text: #f5d09c;
         --error: #ffa9a9;
       }
@@ -48,16 +44,17 @@
     html,
     body {
       margin: 0;
-      background: transparent !important;
+      min-height: 100%;
+      background: var(--bg);
     }
 
     body {
-      padding: 18px;
-      color: var(--text);
+      padding: 13px 17px 10px;
+      color: var(--fg);
     }
 
     .widget {
-      max-width: 400px;
+      width: 100%;
     }
 
     .head,
@@ -70,21 +67,22 @@
     }
 
     .head {
-      margin-bottom: 26px;
+      margin-bottom: 12px;
     }
 
     .heading {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 650;
     }
 
     .country {
-      font-size: 12px;
+      flex: none;
+      font-size: 11px;
       font-weight: 600;
       border-radius: 99px;
-      padding: 6px 10px;
-      background: var(--pill-bg);
-      color: var(--pill-text);
+      padding: 5px 9px;
+      background: var(--button-bg);
+      color: var(--fg);
     }
 
     .country.nl {
@@ -98,22 +96,23 @@
     }
 
     .country.changed {
-      outline: 1px solid #f59e0b;
+      outline: 1px solid #d8941a;
     }
 
     .ip {
-      margin: 0 0 13px;
-      font-size: clamp(22px, 6vw, 30px);
+      margin: 0 0 6px;
+      font-size: clamp(20px, 5.5vw, 27px);
       font-weight: 700;
-      letter-spacing: -.8px;
+      letter-spacing: -.7px;
       overflow-wrap: anywhere;
       font-variant-numeric: tabular-nums;
+      line-height: 1.2;
     }
 
     .meta {
       color: var(--muted);
-      font-size: 12px;
-      min-height: 20px;
+      font-size: 11px;
+      min-height: 17px;
     }
 
     .meta span:first-child {
@@ -122,36 +121,41 @@
       white-space: nowrap;
     }
 
+    .meta span:last-child {
+      flex: none;
+    }
+
     hr {
       border: 0;
       height: 1px;
       background: var(--rule);
-      margin: 24px 0 18px;
+      margin: 13px 0 11px;
     }
 
     .previous {
-      font-size: 12px;
+      min-width: 0;
+      font-size: 11px;
       color: var(--muted);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     .previous strong {
-      display: block;
-      color: var(--text);
-      font-size: 13px;
+      color: var(--fg);
       font-weight: 600;
-      padding-top: 5px;
-      overflow-wrap: anywhere;
     }
 
     button {
+      flex: none;
       cursor: pointer;
       background: var(--button-bg);
-      color: var(--text);
+      color: var(--fg);
       border: 0;
-      border-radius: 9px;
-      padding: 10px 13px;
+      border-radius: 8px;
+      padding: 7px 10px;
       font: inherit;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
     }
 
@@ -165,14 +169,28 @@
     }
 
     #status {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
-      margin-top: 14px;
-      min-height: 16px;
+      margin-top: 7px;
+      min-height: 13px;
     }
 
     #status.error {
       color: var(--error);
+    }
+
+    @media (max-width: 270px) {
+      body {
+        padding: 10px 12px;
+      }
+
+      .head {
+        margin-bottom: 8px;
+      }
+
+      .previous {
+        max-width: 60%;
+      }
     }
   </style>
 </head>
@@ -187,7 +205,7 @@
     <div class="meta"><span id="isp">ISP: —</span><span id="type">—</span></div>
     <hr>
     <div class="footer">
-      <div class="previous">Previous check<strong id="previous">—</strong></div>
+      <div class="previous">Prev: <strong id="previous">—</strong></div>
       <button type="button" id="refresh">↻ Refresh</button>
     </div>
     <div id="status" role="status" aria-live="polite"></div>
@@ -236,7 +254,7 @@
           $('type').textContent = current.ip.includes(':') ? 'IPv6' : 'IPv4';
           $('country').textContent = countryName(current.code, data.country || 'Unknown');
           $('country').className = 'country' + (current.code === 'NL' ? ' nl' : current.code === 'DE' ? ' de' : '') + (changedCountry ? ' changed' : '');
-          $('previous').textContent = previous ? `${countryName(previous.code)} · ${previous.ip}` : 'First check';
+          $('previous').textContent = previous ? `${countryName(previous.code)} · ${previous.ip}` : 'No earlier check';
           const change = changedCountry ? ' · Country changed!' : changedIp ? ' · IP changed' : '';
           $('status').textContent = `Checked at ${dateLabel(current.checkedAt)}${change}`;
           try { localStorage.setItem(STORAGE_KEY, JSON.stringify(current)); } catch { }
